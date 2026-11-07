@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-primary: #fcfcfc;
+    --bg-surface: #f4f4f5;
+    --bg-card: #ffffff;
+    --border-color: #e4e4e7;
+    --text-primary: #18181b;
+    --text-secondary: #71717a;
+    --text-muted: #a1a1aa;
+    --accent-rant: #e11d48;
+    --accent-rant-bg: #ffe4e6;
+    --accent-rant-border: #fecdd3;
+    --accent-build: #0284c7;
+    --accent-build-bg: #e0f2fe;
+    --accent-build-border: #bae6fd;
+    --accent-color: #0d9488;
+    --code-bg: #f8fafc;
+  }
+
+  .dark {
+    --bg-primary: #09090b;
+    --bg-surface: #121215;
+    --bg-card: #18181b;
+    --border-color: #27272a;
+    --text-primary: #f4f4f5;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    --accent-rant: #fb7185;
+    --accent-rant-bg: #88133725;
+    --accent-rant-border: #be123c50;
+    --accent-build: #38bdf8;
+    --accent-build-bg: #0369a125;
+    --accent-build-border: #0284c750;
+    --accent-color: #14b8a6;
+    --code-bg: #111116;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  code, pre, kbd {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+}
+
+/* Shiki Dual-Theme handling & Code blocks */
+html.dark .astro-code,
+html.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+.astro-code {
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  position: relative;
+}
+
+/* Copy button styling inside code containers */
+.code-block-wrapper {
+  position: relative;
+}
+
+.copy-code-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-family: ui-monospace, monospace;
+  border-radius: 0.25rem;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  opacity: 0.8;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  z-index: 10;
+}
+
+.copy-code-button:hover {
+  opacity: 1;
+  background: var(--border-color);
+  color: var(--text-primary);
+}
+
+.copy-code-button.copied {
+  background: #10b981;
+  color: #ffffff;
+  border-color: #10b981;
+}
+
+/* Prose customizations */
+.prose-custom {
+  max-width: 68ch;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+.prose-custom p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.prose-custom h1, .prose-custom h2, .prose-custom h3, .prose-custom h4 {
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.prose-custom h2 {
+  font-size: 1.5rem;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.prose-custom h3 {
+  font-size: 1.25rem;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+}
+
+.prose-custom a {
+  color: var(--accent-color);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose-custom blockquote {
+  border-left: 3px solid var(--border-color);
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin: 1.5em 0;
+}
+
+.prose-custom ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 1.25em 0;
+}
+
+.prose-custom ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin: 1.25em 0;
+}
+
+.prose-custom li {
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+}
+
+.prose-custom code:not(pre code) {
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  font-size: 0.875em;
+  color: var(--text-primary);
+}
