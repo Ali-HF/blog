@@ -28,73 +28,76 @@ const buildCount = sortedPosts.filter((p) => p.data.type === 'build').length;
 ---
 
 <BaseLayout
-  title="Blog Archive"
-  description="All opinionated rants and technical build write-ups by Ali Hasan, sorted newest first."
+  title="Article Index"
+  description="Chronological encyclopedia index of engineering write-ups and editorial rants by Ali Hasan."
 >
-  <div class="space-y-8">
+  <div class="space-y-6">
     <!-- Header -->
-    <div class="border-b border-zinc-200 dark:border-zinc-800 pb-6">
-      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 mb-2">
-        The Archive
+    <header class="pb-2 border-b border-[var(--border-color)]">
+      <h1 class="font-serif text-3xl sm:text-4xl text-[var(--text-primary)] font-normal">
+        Article Index
       </h1>
-      <p class="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base max-w-2xl">
-        Every technical project breakdown, bug autopsy, and unfiltered opinion on dev life.
+      <p class="text-xs font-serif italic text-[var(--text-secondary)] mt-1">
+        Showing all {totalCount} encyclopedia articles in reverse chronological order.
       </p>
-    </div>
+    </header>
 
-    <!-- Filter Bar: Works without JS via URL parameters or with instant tab filtering -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      <!-- Type Filter Tabs -->
-      <div id="filter-tabs" class="inline-flex items-center p-1 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 font-mono text-xs">
-        <a
-          href={url('/blog')}
+    <!-- Wikipedia Filter & Search Strip -->
+    <div class="border border-[var(--border-color)] bg-[var(--bg-surface)] p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
+      <!-- Tabs -->
+      <div id="filter-tabs" class="flex items-center gap-1 border-b sm:border-b-0 border-[var(--border-subtle)] pb-2 sm:pb-0">
+        <span class="text-[var(--text-muted)] mr-2">Filter:</span>
+        <button
+          type="button"
           data-type="all"
-          class="filter-tab px-3 py-1.5 rounded-lg transition-colors text-zinc-900 dark:text-zinc-100 font-medium bg-white dark:bg-zinc-800 shadow-xs"
+          class="filter-tab px-2.5 py-1 border border-[var(--border-color)] bg-[var(--bg-primary)] font-bold text-[var(--text-primary)]"
         >
           All ({totalCount})
-        </a>
-        <a
-          href={url('/blog?type=rant')}
+        </button>
+        <button
+          type="button"
           data-type="rant"
-          class="filter-tab px-3 py-1.5 rounded-lg transition-colors text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
+          class="filter-tab px-2.5 py-1 border border-transparent hover:border-[var(--border-subtle)] text-[var(--text-secondary)]"
         >
           Rants ({rantCount})
-        </a>
-        <a
-          href={url('/blog?type=build')}
+        </button>
+        <button
+          type="button"
           data-type="build"
-          class="filter-tab px-3 py-1.5 rounded-lg transition-colors text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
+          class="filter-tab px-2.5 py-1 border border-transparent hover:border-[var(--border-subtle)] text-[var(--text-secondary)]"
         >
           Builds ({buildCount})
-        </a>
+        </button>
       </div>
 
-      <!-- Quick Search input fallback -->
+      <!-- Quick Filter Search Input -->
       <div class="relative w-full sm:w-64">
         <input
           id="post-quick-filter"
           type="text"
           placeholder="Filter by title..."
-          class="w-full px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-mono placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-teal-500"
+          class="w-full px-2.5 py-1 bg-[var(--bg-primary)] border border-[var(--border-color)] text-xs font-mono text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--text-primary)]"
         />
       </div>
     </div>
 
-    <!-- Tag Cloud Strip -->
-    <div class="flex flex-wrap items-center gap-1.5 py-2 font-mono text-xs text-zinc-500">
-      <span class="mr-1 text-zinc-400">Popular tags:</span>
-      {tags.map(([tag, count]) => (
-        <a
-          href={url(`/tags/${tag}`)}
-          class="px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-600 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-        >
-          #{tag} <span class="text-zinc-400 text-[10px]">({count})</span>
-        </a>
-      ))}
+    <!-- Category Portal Cloud -->
+    <div class="border border-[var(--border-color)] bg-[var(--bg-card)] p-3 text-xs font-mono">
+      <span class="font-bold text-[var(--text-primary)] mr-2">All Categories:</span>
+      <div class="inline-flex flex-wrap gap-x-2 gap-y-1">
+        {tags.map(([tag, count]) => (
+          <span>
+            <a href={url(`/tags/${tag}`)} class="underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black">
+              {tag}
+            </a>
+            <span class="text-[var(--text-muted)]">({count})</span>
+          </span>
+        ))}
+      </div>
     </div>
 
-    <!-- Posts Grid / List -->
-    <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-4">
+    <!-- Articles Grid -->
+    <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
       {sortedPosts.map((post) => (
         <div class="post-item" data-type={post.data.type} data-title={post.data.title.toLowerCase()}>
           <PostCard post={post} />
@@ -103,8 +106,8 @@ const buildCount = sortedPosts.filter((p) => p.data.type === 'build').length;
     </div>
 
     <!-- Empty State -->
-    <div id="no-posts-message" class="hidden text-center py-16">
-      <p class="font-mono text-sm text-zinc-500">No posts match your selected filter.</p>
+    <div id="no-posts-message" class="hidden text-center py-12 border border-dashed border-[var(--border-color)]">
+      <p class="font-serif italic text-sm text-[var(--text-secondary)]">No articles match your selected filter.</p>
     </div>
   </div>
 </BaseLayout>
@@ -124,11 +127,11 @@ const buildCount = sortedPosts.filter((p) => p.data.type === 'build').length;
       tabs.forEach((tab) => {
         const type = tab.getAttribute('data-type');
         if (type === selectedType) {
-          tab.classList.add('bg-white', 'dark:bg-zinc-800', 'text-zinc-900', 'dark:text-zinc-100', 'shadow-xs', 'font-medium');
-          tab.classList.remove('text-zinc-600', 'dark:text-zinc-400');
+          tab.classList.add('bg-[var(--bg-primary)]', 'font-bold', 'text-[var(--text-primary)]', 'border-[var(--border-color)]');
+          tab.classList.remove('border-transparent', 'text-[var(--text-secondary)]');
         } else {
-          tab.classList.remove('bg-white', 'dark:bg-zinc-800', 'text-zinc-900', 'dark:text-zinc-100', 'shadow-xs', 'font-medium');
-          tab.classList.add('text-zinc-600', 'dark:text-zinc-400');
+          tab.classList.remove('bg-[var(--bg-primary)]', 'font-bold', 'text-[var(--text-primary)]', 'border-[var(--border-color)]');
+          tab.classList.add('border-transparent', 'text-[var(--text-secondary)]');
         }
       });
 
@@ -155,7 +158,6 @@ const buildCount = sortedPosts.filter((p) => p.data.type === 'build').length;
       }
     }
 
-    // Intercept tab clicks for fast client-side tab switching without reloading
     tabs.forEach((tab) => {
       tab.addEventListener('click', (e) => {
         e.preventDefault();
@@ -173,7 +175,6 @@ const buildCount = sortedPosts.filter((p) => p.data.type === 'build').length;
       });
     }
 
-    // Initial run
     applyFilter(initialType);
   }
 
