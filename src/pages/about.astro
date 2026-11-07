@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import siteConfig from '../site.config';
+
+const actionsUrl = `https://github.com/${siteConfig.githubUser}/${siteConfig.repoName}/actions`;
+---
+
+<BaseLayout
+  title="About Ali Hasan"
+  description="BCIT student at NED University, Karachi. Building software, exploring AI engineering, running Notebloom and hkh.agency."
+>
+  <div class="max-w-3xl mx-auto space-y-10">
+    <!-- Header -->
+    <div class="border-b border-zinc-200 dark:border-zinc-800 pb-6">
+      <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 font-mono text-xs text-zinc-600 dark:text-zinc-400 mb-4">
+        <span>📍 Karachi, Pakistan</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 mb-3">
+        About Ali Hasan
+      </h1>
+      <p class="text-lg text-zinc-600 dark:text-zinc-300 font-normal">
+        BCIT student at NED University, builder, and future AI engineer.
+      </p>
+    </div>
+
+    <!-- Bio / Story -->
+    <div class="prose-custom space-y-6 text-zinc-700 dark:text-zinc-300 leading-relaxed">
+      <p>
+        I'm Ali Hasan (<strong>Ali-HF</strong> online). I study Computer Science &amp; Information Technology (BCIT) at NED University of Engineering and Technology in Karachi.
+      </p>
+
+      <p>
+        My goal is to become an <strong>AI engineer</strong>. Right now, I split my time between core CS fundamentals—I genuinely enjoy C++, Object-Oriented Programming (OOP), and Data Structures &amp; Algorithms (DSA)—and shipping full-stack products with modern web tech. I'm actively expanding my web skills with the MERN stack while building production apps with Next.js and Supabase.
+      </p>
+
+      <p>
+        I build fast with AI tooling (Antigravity, Claude, Groq, FastEmbed) and I believe in being completely transparent about it. AI is an accelerator for scaffolding, boilerplate, and fast iteration—not an excuse to ignore how memory, race conditions, or cryptographic handshakes work under the hood.
+      </p>
+
+      <h2 class="text-xl font-bold text-zinc-900 dark:text-zinc-100 pt-4 border-b border-zinc-200 dark:border-zinc-800 pb-2">
+        Ventures &amp; Work
+      </h2>
+
+      <p>
+        Beyond university coursework, I run two independent ventures:
+      </p>
+
+      <ul class="list-disc pl-5 space-y-2">
+        <li>
+          <a
+            href={siteConfig.notebloomUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-teal-600 dark:text-teal-400 font-semibold underline underline-offset-2"
+          >
+            Notebloom
+          </a>: A bespoke stationery brand and online store I founded, engineered, and managed end-to-end, selling both through our web platform and at physical retail stalls like Habitt.
+        </li>
+        <li>
+          <a
+            href={siteConfig.hkhAgencyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-teal-600 dark:text-teal-400 font-semibold underline underline-offset-2"
+          >
+            hkh.agency
+          </a>: A marketing and digital growth agency working with businesses to establish high-converting online presence.
+        </li>
+      </ul>
+
+      <!-- Opinions / Takes Hook -->
+      <!-- ALI: add your personal philosophy on balancing university life, coding projects, and running businesses -->
+    </div>
+
+    <!-- GitHub Activity & Deployment Status Section -->
+    <section class="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+          </svg>
+          GitHub Activity
+        </h2>
+        <span class="font-mono text-xs text-zinc-500">Live CI/CD</span>
+      </div>
+
+      <p class="text-xs text-zinc-600 dark:text-zinc-400">
+        Every commit to this blog triggers an automated GitHub Actions workflow deploying statically to GitHub Pages.
+      </p>
+
+      <div class="flex flex-wrap gap-3 font-mono text-xs pt-1">
+        <a
+          href={siteConfig.githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-3 py-1.5 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium hover:bg-zinc-800 transition-colors inline-flex items-center gap-1.5"
+        >
+          <span>github.com/{siteConfig.githubUser}</span>
+          <span>&nearr;</span>
+        </a>
+
+        <a
+          href={actionsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-3 py-1.5 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-zinc-400 transition-colors inline-flex items-center gap-1.5"
+        >
+          <span>Actions Runs ({siteConfig.repoName})</span>
+          <span>&nearr;</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Social Links Strip -->
+    <div class="pt-6 border-t border-zinc-200 dark:border-zinc-800 flex flex-wrap items-center gap-6 font-mono text-xs text-zinc-500">
+      <span class="text-zinc-400">Connect:</span>
+      <a href={siteConfig.githubUrl} target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 dark:hover:text-teal-400">
+        GitHub
+      </a>
+      <a href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 dark:hover:text-teal-400">
+        LinkedIn
+      </a>
+      <a href={siteConfig.notebloomUrl} target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 dark:hover:text-teal-400">
+        Notebloom
+      </a>
+      <a href={siteConfig.hkhAgencyUrl} target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 dark:hover:text-teal-400">
+        hkh.agency
+      </a>
+    </div>
+  </div>
+</BaseLayout>

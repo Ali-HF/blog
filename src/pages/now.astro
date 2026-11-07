@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../utils/paths';
+
+const lastUpdated = "November 2026";
+---
+
+<BaseLayout
+  title="Now"
+  description="What Ali Hasan is currently building, studying, and thinking about right now."
+>
+  <div class="max-w-2xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="border-b border-zinc-200 dark:border-zinc-800 pb-6">
+      <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 font-mono text-xs text-emerald-600 dark:text-emerald-400 mb-4">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>Active Focus — {lastUpdated}</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 mb-2">
+        What I'm doing now
+      </h1>
+      <p class="text-xs font-mono text-zinc-500">
+        Inspired by Derek Sivers' <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer" class="underline hover:text-teal-500">now page</a> movement.
+      </p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="space-y-6 text-zinc-700 dark:text-zinc-300 leading-relaxed">
+      <section class="space-y-3">
+        <h2 class="text-base font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+          <span class="text-teal-500">&gt;</span> University &amp; Academics
+        </h2>
+        <p class="text-sm">
+          Third semester of BCIT at NED University. Deep into CS-214 (Data Structures and Algorithms) building our 3D visualizer studio course project, and finishing up OOP in C++ (CT-260).
+        </p>
+      </section>
+
+      <section class="space-y-3">
+        <h2 class="text-base font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+          <span class="text-sky-500">&gt;</span> Active Builds
+        </h2>
+        <ul class="list-disc pl-5 text-sm space-y-2">
+          <li>
+            Polishing the <strong>3D Memory &amp; Algorithm Studio</strong> with Google Stitch UI designs and Antigravity.
+          </li>
+          <li>
+            Iterating on the <strong>Small Software Cloud</strong> prototype following the YE Digital Hackathon.
+          </li>
+          <li>
+            Exploring WebAuthn attestation challenges in the <strong>Verified Call</strong> prototype.
+          </li>
+        </ul>
+      </section>
+
+      <section class="space-y-3">
+        <h2 class="text-base font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+          <span class="text-rose-500">&gt;</span> Ventures
+        </h2>
+        <p class="text-sm">
+          Managing inventory restocks for <strong>Notebloom</strong> following our physical pop-up stall at Habitt, and onboarding clients at <strong>hkh.agency</strong>.
+        </p>
+      </section>
+
+      <!-- ALI opinion comment hook -->
+      <!-- ALI: update this section whenever your main focus or reading list changes -->
+    </div>
+
+    <!-- Quick Footer Note -->
+    <div class="pt-8 border-t border-zinc-200 dark:border-zinc-800 text-xs font-mono text-zinc-400">
+      <p>This page is updated whenever priorities shift significantly.</p>
+    </div>
+  </div>
+</BaseLayout>
