@@ -71,10 +71,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || siteConfig.siteUr
     </script>
   </head>
 
-  <body class="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased selection:bg-teal-500/20 selection:text-teal-900 dark:selection:text-teal-200">
+  <body class="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
     <Header />
     
-    <main id="main-content" class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <main id="main-content" class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
       <slot />
     </main>
 
@@ -127,3 +127,4 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || siteConfig.siteUr
     </script>
   </body>
 </html>
+
