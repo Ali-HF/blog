@@ -1,0 +1,56 @@
+---
+import siteConfig from '../site.config';
+import { url } from '../utils/paths';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="w-full border-t border-zinc-200 dark:border-zinc-800/80 bg-zinc-50 dark:bg-zinc-950/60 mt-auto transition-colors">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-zinc-500 dark:text-zinc-400">
+    <!-- Left: Author & year -->
+    <div class="flex items-center gap-2">
+      <span class="text-zinc-900 dark:text-zinc-200 font-semibold">{siteConfig.author}</span>
+      <span>•</span>
+      <span>© {currentYear}</span>
+      <span>•</span>
+      <span>Karachi, PK</span>
+    </div>
+
+    <!-- Center: Built with Astro -->
+    <div class="flex items-center gap-1.5">
+      <span>Built with</span>
+      <a
+        href="https://astro.build"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-zinc-800 dark:text-zinc-200 hover:text-teal-600 dark:hover:text-teal-400 underline underline-offset-2 transition-colors font-semibold"
+      >
+        Astro
+      </a>
+      <span>&amp; Static HTML</span>
+    </div>
+
+    <!-- Right: RSS and GitHub links -->
+    <div class="flex items-center gap-4">
+      <a
+        href={url('/rss.xml')}
+        class="inline-flex items-center gap-1 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+        title="RSS Feed"
+      >
+        <svg class="w-3.5 h-3.5 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93v-2.83Z"/>
+        </svg>
+        <span>RSS</span>
+      </a>
+
+      <a
+        href={siteConfig.githubUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+      >
+        GitHub ({siteConfig.githubUser})
+      </a>
+    </div>
+  </div>
+</footer>
