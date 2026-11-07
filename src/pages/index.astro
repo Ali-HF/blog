@@ -20,147 +20,153 @@ const latestBuilds = sortedPosts.filter((p) => p.data.type === 'build').slice(0,
 // Fetch featured project
 const allProjects = await getCollection('projects');
 const featuredProject = allProjects.find((p) => p.data.featured) || allProjects[0];
+const totalArticles = sortedPosts.length;
 ---
 
-<BaseLayout title={`${siteConfig.name} — Personal Tech Blog & Engineering Notes`}>
-  <!-- Hero / Intro -->
-  <section class="py-8 sm:py-12 border-b border-zinc-200 dark:border-zinc-800">
-    <div class="max-w-3xl">
-      <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 font-mono text-xs text-zinc-600 dark:text-zinc-400 mb-6">
-        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-        <span>BCIT @ NED University, Karachi</span>
+<BaseLayout title={`${siteConfig.name} — Main Page`}>
+  <!-- Wikipedia Main Page Welcome Banner -->
+  <section class="border border-[var(--border-color)] bg-[var(--bg-surface)] p-4 sm:p-6 mb-6">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[var(--border-color)] pb-4 mb-4">
+      <div>
+        <h1 class="font-serif text-2xl sm:text-3xl font-normal text-[var(--text-primary)]">
+          Welcome to <span class="font-bold">{siteConfig.name}</span>,
+        </h1>
+        <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-serif italic mt-0.5">
+          the personal encyclopedia of developer rants, shipped software, and technical post-mortems.
+        </p>
       </div>
 
-      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 mb-4 leading-tight">
-        {siteConfig.author}
-      </h1>
+      <div class="text-xs font-mono text-right text-[var(--text-secondary)] shrink-0 space-y-0.5">
+        <div>Total articles: <strong class="text-[var(--text-primary)]">{totalArticles}</strong></div>
+        <div>Curator: <strong class="text-[var(--text-primary)]">{siteConfig.author}</strong> (NED University)</div>
+      </div>
+    </div>
 
-      <p class="text-lg sm:text-xl text-zinc-600 dark:text-zinc-300 font-normal leading-relaxed mb-6">
-        Building software fast, learning AI engineering, and documenting the journey.
-        Here you'll find two things: <strong class="text-rose-600 dark:text-rose-400 font-semibold">opinionated rants</strong> about tools that test my patience, and <strong class="text-sky-600 dark:text-sky-400 font-semibold">detailed builds</strong> breaking down real code, bugs, and architectures.
-      </p>
+    <!-- Wikipedia Portal Nav Strip -->
+    <div class="flex flex-wrap items-center justify-between gap-3 text-xs font-serif">
+      <div class="flex flex-wrap items-center gap-4">
+        <span>Portals:</span>
+        <a href={url('/blog?type=rant')} class="underline hover:text-black dark:hover:text-white">Rants &amp; Opinions</a>
+        <span>•</span>
+        <a href={url('/blog?type=build')} class="underline hover:text-black dark:hover:text-white">Fullstack Builds</a>
+        <span>•</span>
+        <a href={url('/projects')} class="underline hover:text-black dark:hover:text-white">Project Index</a>
+        <span>•</span>
+        <a href={url('/about')} class="underline hover:text-black dark:hover:text-white">Biography</a>
+      </div>
 
-      <div class="flex flex-wrap items-center gap-3 font-mono text-xs">
-        <a
-          href={url('/blog')}
-          class="px-4 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium hover:bg-zinc-800 dark:hover:bg-white transition-colors"
-        >
-          Read the Blog &rarr;
-        </a>
-        <a
-          href={url('/projects')}
-          class="px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors"
-        >
-          View Projects
-        </a>
-        <a
-          href={url('/about')}
-          class="px-4 py-2 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-        >
-          About Me
-        </a>
+      <div class="font-mono text-[11px] text-[var(--text-muted)]">
+        Free to read • Zero telemetry
       </div>
     </div>
   </section>
 
-  <!-- Featured Project Strip -->
+  <!-- Wikipedia Featured Article Box (Featured Project) -->
   {featuredProject && (
-    <section class="my-10 p-6 rounded-2xl border border-teal-500/30 bg-teal-500/5 dark:bg-teal-950/20 relative overflow-hidden">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div class="space-y-2">
+    <section class="border border-[var(--border-color)] bg-[var(--bg-card)] mb-8">
+      <div class="bg-[var(--border-light)] px-4 py-2 border-b border-[var(--border-color)] flex items-center justify-between font-serif">
+        <h2 class="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+          <span>★</span>
+          <span>Today's featured project</span>
+        </h2>
+        <span class="font-mono text-xs text-[var(--text-secondary)]">Year: {featuredProject.data.year}</span>
+      </div>
+
+      <div class="p-4 sm:p-6 flex flex-col md:flex-row gap-6">
+        <div class="flex-1 space-y-3">
           <div class="flex items-center gap-2">
-            <span class="font-mono text-xs uppercase font-semibold text-teal-600 dark:text-teal-400 tracking-wider">
-              ★ Featured Project
-            </span>
+            <h3 class="font-serif text-xl font-bold text-[var(--text-primary)]">
+              {featuredProject.data.title}
+            </h3>
             <Badge type={featuredProject.data.status} />
           </div>
-          <h2 class="text-xl font-bold text-zinc-900 dark:text-zinc-100">
-            {featuredProject.data.title}
-          </h2>
-          <p class="text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl">
+
+          <p class="text-sm text-[var(--text-secondary)] leading-relaxed">
             {featuredProject.data.summary}
           </p>
-          <div class="flex flex-wrap gap-1.5 pt-1 font-mono text-xs text-zinc-500">
-            {featuredProject.data.stack.map((tech) => (
-              <span class="px-2 py-0.5 rounded bg-zinc-200/60 dark:bg-zinc-800/80 border border-zinc-300/50 dark:border-zinc-700/50">
-                {tech}
+
+          <div class="pt-2 flex flex-wrap items-center gap-2 text-xs font-mono">
+            <span class="font-bold text-[var(--text-primary)]">Specification stack:</span>
+            {featuredProject.data.stack.map((t) => (
+              <span class="border border-[var(--border-color)] px-1.5 py-0.5 bg-[var(--bg-surface)]">
+                {t}
               </span>
             ))}
           </div>
         </div>
 
-        <div class="flex sm:flex-col items-center gap-2 shrink-0 w-full sm:w-auto">
+        <!-- Mini Wiki Infobox for Featured Item -->
+        <div class="w-full md:w-60 border border-[var(--border-color)] bg-[var(--bg-surface)] p-3 text-xs font-mono space-y-2 shrink-0">
+          <div class="text-center font-serif font-bold pb-1 border-b border-[var(--border-subtle)]">
+            Quick Reference
+          </div>
+          <div class="flex justify-between border-b border-[var(--border-subtle)] pb-1">
+            <span class="text-[var(--text-muted)]">Status:</span>
+            <span>{featuredProject.data.status}</span>
+          </div>
+          <div class="flex justify-between border-b border-[var(--border-subtle)] pb-1">
+            <span class="text-[var(--text-muted)]">Category:</span>
+            <span>Software</span>
+          </div>
           {featuredProject.data.liveUrl && (
-            <a
-              href={featuredProject.data.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-full text-center px-4 py-2 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-mono text-xs transition-colors"
-            >
-              Visit Live &nearr;
-            </a>
+            <div class="pt-1 text-center">
+              <a
+                href={featuredProject.data.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block w-full py-1 text-center border border-[var(--border-color)] bg-[var(--bg-primary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-colors"
+              >
+                External Link &nearr;
+              </a>
+            </div>
           )}
-          <a
-            href={url('/projects')}
-            class="w-full text-center px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 font-mono text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors"
-          >
-            All Projects &rarr;
-          </a>
         </div>
       </div>
     </section>
   )}
 
-  <!-- Two Columns: Latest Rants vs Latest Builds -->
-  <section class="my-12">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-      <!-- Column 1: Latest Rants -->
-      <div class="space-y-6">
-        <div class="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-zinc-800">
-          <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-rose-500"></span>
-            <h2 class="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-              Latest Rants
-            </h2>
-          </div>
-          <a
-            href={url('/blog?type=rant')}
-            class="font-mono text-xs text-rose-600 dark:text-rose-400 hover:underline"
-          >
-            View all rants &rarr;
-          </a>
-        </div>
-
-        <div class="flex flex-col gap-4">
-          {latestRants.map((post) => (
-            <PostCard post={post} />
-          ))}
-        </div>
+  <!-- Two Columns (Wikipedia Style Side-by-Side Panels) -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <!-- Left Column: Did you know... (Latest Rants) -->
+    <section class="border border-[var(--border-color)] bg-[var(--bg-card)]">
+      <div class="bg-[var(--border-light)] px-4 py-2 border-b border-[var(--border-color)] flex items-center justify-between font-serif">
+        <h2 class="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+          <span>■</span>
+          <span>From the editorial rants</span>
+        </h2>
+        <a href={url('/blog?type=rant')} class="text-xs font-mono underline hover:text-[var(--text-primary)]">
+          All rants &rarr;
+        </a>
       </div>
 
-      <!-- Column 2: Latest Builds -->
-      <div class="space-y-6">
-        <div class="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-zinc-800">
-          <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-sky-500"></span>
-            <h2 class="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-              Latest Builds
-            </h2>
-          </div>
-          <a
-            href={url('/blog?type=build')}
-            class="font-mono text-xs text-sky-600 dark:text-sky-400 hover:underline"
-          >
-            View all builds &rarr;
-          </a>
-        </div>
-
-        <div class="flex flex-col gap-4">
-          {latestBuilds.map((post) => (
+      <div class="p-4 divide-y divide-[var(--border-light)] space-y-4">
+        {latestRants.map((post) => (
+          <div class="pt-3 first:pt-0">
             <PostCard post={post} />
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- Right Column: Recent engineering write-ups (Latest Builds) -->
+    <section class="border border-[var(--border-color)] bg-[var(--bg-card)]">
+      <div class="bg-[var(--border-light)] px-4 py-2 border-b border-[var(--border-color)] flex items-center justify-between font-serif">
+        <h2 class="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
+          <span>□</span>
+          <span>Recent engineering builds</span>
+        </h2>
+        <a href={url('/blog?type=build')} class="text-xs font-mono underline hover:text-[var(--text-primary)]">
+          All builds &rarr;
+        </a>
+      </div>
+
+      <div class="p-4 divide-y divide-[var(--border-light)] space-y-4">
+        {latestBuilds.map((post) => (
+          <div class="pt-3 first:pt-0">
+            <PostCard post={post} />
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
 </BaseLayout>
