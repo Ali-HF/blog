@@ -4,41 +4,42 @@ import { url } from '../utils/paths';
 ---
 
 <BaseLayout
-  title="404 — Segmentation Fault (Core Dumped)"
-  description="This route does not exist. You probably dereferenced a null pointer."
+  title="Wikipedia: Article not found (404)"
+  description="This encyclopedia article does not exist."
 >
-  <div class="max-w-lg mx-auto py-16 text-center space-y-6">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-rose-500/30 bg-rose-500/10 font-mono text-xs text-rose-600 dark:text-rose-400">
-      <span>Signal 11: SIGSEGV</span>
+  <div class="max-w-2xl mx-auto py-10 space-y-6">
+    <header class="pb-2 border-b border-[var(--border-color)]">
+      <h1 class="font-serif text-3xl sm:text-4xl text-[var(--text-primary)] font-normal">
+        Error 404: Article Not Found
+      </h1>
+      <p class="text-xs font-serif italic text-[var(--text-secondary)] mt-1">
+        Ali's Wiki does not have an encyclopedia article with this exact name.
+      </p>
+    </header>
+
+    <div class="p-4 border border-[var(--border-color)] bg-[var(--bg-surface)] text-xs font-mono space-y-2">
+      <div><strong>Status:</strong> HTTP 404 Null Dereference</div>
+      <div><strong>Diagnostics:</strong> The requested slug does not match any entry in the static pages index.</div>
     </div>
 
-    <h1 class="text-6xl sm:text-8xl font-black font-mono tracking-tighter text-zinc-900 dark:text-zinc-100">
-      404
-    </h1>
-
-    <div class="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 font-mono text-xs text-left text-zinc-600 dark:text-zinc-400 space-y-1 overflow-x-auto">
-      <div class="text-rose-500 font-semibold">&gt; Fatal error: route dereferenced nullptr</div>
-      <div>&gt; at MemoryAddress: 0x0000000000000404</div>
-      <div>&gt; Stack trace: [Astro Router] -&gt; PageNotFoundException</div>
-      <div>&gt; State: Cleaned up heap frames. You are lost.</div>
+    <div class="prose-custom font-serif text-[15px] space-y-3">
+      <p>
+        The page you requested may have been moved, renamed, or never existed in the first place. You can try searching the index or returning to the portal main page.
+      </p>
     </div>
 
-    <p class="text-zinc-600 dark:text-zinc-400 text-sm">
-      Either Ali changed the slug, or you typed a URL that never existed. Unlike C++ pointer bugs, this one won't crash your operating system.
-    </p>
-
-    <div class="pt-4 flex items-center justify-center gap-4 font-mono text-xs">
+    <div class="pt-4 flex items-center gap-4 text-xs font-mono">
       <a
         href={url('/')}
-        class="px-4 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium hover:bg-zinc-800 transition-colors"
+        class="px-3 py-1.5 border border-[var(--border-color)] bg-[var(--bg-surface)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-colors"
       >
-        &larr; Return to Safety (Home)
+        &larr; Return to Main Page
       </a>
       <a
         href={url('/blog')}
-        class="px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-zinc-400 transition-colors"
+        class="px-3 py-1.5 border border-[var(--border-color)] bg-[var(--bg-surface)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-colors"
       >
-        Browse Archive
+        Search Article Archive
       </a>
     </div>
   </div>
