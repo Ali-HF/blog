@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { url } from '../../utils/paths';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+
+  // Extract all unique tags
+  const tags = new Set<string>();
+  allPosts.forEach((post) => {
+    post.data.tags.forEach((tag) => tags.add(tag));
+  });
+
+  return Array.from(tags).map((tag) => {
+    const filteredPosts = allPosts
+      .filter((post) => post.data.tags.includes(tag))
+      .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout
+  title={`Posts tagged #${tag}`}
+  description={`All articles, rants, and engineering write-ups tagged with #${tag}.`}
+>
+  <div class="space-y-8">
+    <!-- Header -->
+    <div class="border-b border-zinc-200 dark:border-zinc-800 pb-6">
+      <a
+        href={url('/blog')}
+        class="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors mb-4 group"
+      >
+        <span class="group-hover:-translate-x-0.5 transition-transform">&larr;</span>
+        <span>Back to all posts</span>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 font-mono">
+          #{tag}
+        </h1>
+        <span class="font-mono text-xs px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700">
+          {posts.length} {posts.length === 1 ? 'post' : 'posts'}
+        </span>
+      </div>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

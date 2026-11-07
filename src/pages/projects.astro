@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Badge from '../components/Badge.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+
+// Sort: featured first, then by year descending
+const sortedProjects = projects.sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return Number(b.data.year) - Number(a.data.year);
+});
+
+const totalCount = sortedProjects.length;
+const shippedCount = sortedProjects.filter((p) => p.data.status === 'shipped').length;
+const inProgressCount = sortedProjects.filter((p) => p.data.status === 'in-progress').length;
+---
+
+<BaseLayout
+  title="Projects & Builds"
+  description="Full portfolio of web applications, systems, academic course projects, and hackathon entries built by Ali Hasan."
+>
+  <div class="space-y-8">
+    <!-- Header -->
+    <div class="border-b border-zinc-200 dark:border-zinc-800 pb-6">
+      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 mb-2">
+        Projects &amp; Builds
+      </h1>
+      <p class="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base max-w-2xl">
+        A catalog of what I've engineered, shipped, or am currently hacking on. No hypothetical roadmaps—just actual working software and active builds.
+      </p>
+    </div>
+
+    <!-- Filter Buttons (instant client filter) -->
+    <div class="flex items-center gap-2 font-mono text-xs p-1 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 w-fit">
+      <button
+        type="button"
+        data-filter="all"
+        class="proj-filter px-3 py-1.5 rounded-lg font-medium transition-colors bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs"
+      >
+        All ({totalCount})
+      </button>
+      <button
+        type="button"
+        data-filter="shipped"
+        class="proj-filter px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+      >
+        Shipped ({shippedCount})
+      </button>
+      <button
+        type="button"
+        data-filter="in-progress"
+        class="proj-filter px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+      >
+        In Progress ({inProgressCount})
+      </button>
+    </div>
+
+    <!-- Projects Grid -->
+    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {sortedProjects.map((project) => {
+        const { title, summary, stack, status, repo, liveUrl, year, featured } = project.data;
+        return (
+          <div
+            class="project-card flex flex-col p-5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 transition-all hover:border-zinc-400 dark:hover:border-zinc-700"
+            data-status={status}
+          >
+            <!-- Card Header -->
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-1.5">
+                <Badge type={status} />
+                {featured && (
+                  <span class="font-mono text-[10px] uppercase font-bold text-teal-600 dark:text-teal-400 px-1.5 py-0.5 rounded bg-teal-50 dark:bg-teal-950/40 border border-teal-500/20">
+                    Featured
+                  </span>
+                )}
+              </div>
+              <span class="font-mono text-xs text-zinc-400">{year}</span>
+            </div>
+
+            <!-- Title -->
+            <h2 class="text-base font-bold text-zinc-900 dark:text-zinc-100 mb-2 leading-snug">
+              {title}
+            </h2>
+
+            <!-- Summary -->
+            <p class="text-xs text-zinc-600 dark:text-zinc-400 line-clamp-3 mb-4 leading-relaxed flex-1">
+              {summary}
+            </p>
+
+            <!-- Stack Pills -->
+            <div class="flex flex-wrap gap-1 mb-4 font-mono text-[10px] text-zinc-500">
+              {stack.map((t) => (
+                <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/60">
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <!-- Links (Repo / Live) -->
+            <div class="pt-3 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between font-mono text-xs">
+              <div class="flex items-center gap-3">
+                {repo && (
+                  <a
+                    href={repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-zinc-600 dark:text-zinc-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors inline-flex items-center gap-1"
+                  >
+                    Source &nearr;
+                  </a>
+                )}
+                {liveUrl && (
+                  <a
+                    href={liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-teal-600 dark:text-teal-400 hover:underline inline-flex items-center gap-1 font-semibold"
+                  >
+                    Live Demo &nearr;
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  function setupProjectFilters() {
+    const filterButtons = document.querySelectorAll('.proj-filter');
+    const cards = document.querySelectorAll('.project-card');
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+
+        // Toggle active button style
+        filterButtons.forEach((b) => {
+          if (b === btn) {
+            b.classList.add('bg-white', 'dark:bg-zinc-800', 'text-zinc-900', 'dark:text-zinc-100', 'shadow-xs', 'font-medium');
+            b.classList.remove('text-zinc-600', 'dark:text-zinc-400');
+          } else {
+            b.classList.remove('bg-white', 'dark:bg-zinc-800', 'text-zinc-900', 'dark:text-zinc-100', 'shadow-xs', 'font-medium');
+            b.classList.add('text-zinc-600', 'dark:text-zinc-400');
+          }
+        });
+
+        // Filter cards
+        cards.forEach((card) => {
+          const status = card.getAttribute('data-status');
+          if (filter === 'all' || status === filter) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+  }
+
+  setupProjectFilters();
+  document.addEventListener('astro:after-swap', setupProjectFilters);
+</script>
