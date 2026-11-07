@@ -47,7 +47,7 @@ import { url } from '../utils/paths';
   </div>
 </div>
 
-<script is:inline define:vars={{ baseSearchUrl: url('/pagefind/pagefind.js') }}>
+<script is:inline define:vars={{ baseSearchUrl: url('/pagefind/pagefind.js'), blogUrl: url('/blog') }}>
   let pagefindInstance = null;
   let isPagefindLoaded = false;
 
@@ -140,7 +140,7 @@ import { url } from '../utils/paths';
           resultsContainer.innerHTML = `
             <div class="text-center py-6 space-y-2">
               <p class="text-xs text-zinc-500 font-mono">Pagefind index generates after building with: <code class="px-1 py-0.5 bg-zinc-100 dark:bg-zinc-800 rounded">npm run build</code></p>
-              <a href="/blog" class="text-xs text-teal-600 dark:text-teal-400 underline font-mono">Browse all posts in blog archive</a>
+              <a href="${blogUrl}" class="text-xs text-teal-600 dark:text-teal-400 underline font-mono">Browse all posts in blog archive</a>
             </div>
           `;
         }
