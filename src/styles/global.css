@@ -4,55 +4,198 @@
 
 @layer base {
   :root {
-    --bg-primary: #fcfcfc;
-    --bg-surface: #f4f4f5;
+    /* Wikipedia Black & White Theme (White being main) */
+    --bg-primary: #ffffff;
+    --bg-surface: #f8f9fa;
     --bg-card: #ffffff;
-    --border-color: #e4e4e7;
-    --text-primary: #18181b;
-    --text-secondary: #71717a;
-    --text-muted: #a1a1aa;
-    --accent-rant: #e11d48;
-    --accent-rant-bg: #ffe4e6;
-    --accent-rant-border: #fecdd3;
-    --accent-build: #0284c7;
-    --accent-build-bg: #e0f2fe;
-    --accent-build-border: #bae6fd;
-    --accent-color: #0d9488;
-    --code-bg: #f8fafc;
+    --border-color: #a2a9b1;
+    --border-subtle: #c8ccd1;
+    --border-light: #eaecf0;
+    --text-primary: #202122;
+    --text-secondary: #54595d;
+    --text-muted: #72777d;
+    --accent-rant: #000000;
+    --accent-rant-bg: #000000;
+    --accent-rant-text: #ffffff;
+    --accent-build: #202122;
+    --accent-build-bg: #f8f9fa;
+    --accent-build-border: #202122;
+    --accent-color: #000000;
+    --code-bg: #f8f9fa;
   }
 
   .dark {
-    --bg-primary: #09090b;
-    --bg-surface: #121215;
-    --bg-card: #18181b;
-    --border-color: #27272a;
-    --text-primary: #f4f4f5;
-    --text-secondary: #a1a1aa;
-    --text-muted: #71717a;
-    --accent-rant: #fb7185;
-    --accent-rant-bg: #88133725;
-    --accent-rant-border: #be123c50;
-    --accent-build: #38bdf8;
-    --accent-build-bg: #0369a125;
-    --accent-build-border: #0284c750;
-    --accent-color: #14b8a6;
-    --code-bg: #111116;
+    /* Dark / Inverted Wikipedia */
+    --bg-primary: #101418;
+    --bg-surface: #1a1f24;
+    --bg-card: #14181c;
+    --border-color: #444d56;
+    --border-subtle: #2d333b;
+    --border-light: #22272e;
+    --text-primary: #eaecf0;
+    --text-secondary: #a2a9b1;
+    --text-muted: #768390;
+    --accent-rant: #ffffff;
+    --accent-rant-bg: #ffffff;
+    --accent-rant-text: #000000;
+    --accent-build: #eaecf0;
+    --accent-build-bg: #1a1f24;
+    --accent-build-border: #eaecf0;
+    --accent-color: #ffffff;
+    --code-bg: #15191e;
   }
 
   html {
     scroll-behavior: smooth;
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Nimbus Sans L", Arial, sans-serif;
   }
 
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
 
   code, pre, kbd {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family: "Consolas", "Menlo", "DejaVu Sans Mono", "Courier New", monospace;
   }
+}
+
+/* Wikipedia Serif Headers */
+.wiki-serif {
+  font-family: "Linux Libertine", "Georgia", "Times New Roman", serif;
+}
+
+/* Wikipedia Layout & Prose */
+.prose-custom {
+  max-width: 72ch;
+  line-height: 1.65;
+  font-size: 0.9375rem; /* Wikipedia body size */
+}
+
+.prose-custom p {
+  margin-top: 0.85em;
+  margin-bottom: 0.85em;
+}
+
+.prose-custom h1,
+.prose-custom h2,
+.prose-custom h3,
+.prose-custom h4 {
+  color: var(--text-primary);
+  font-family: "Linux Libertine", "Georgia", "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+.prose-custom h1 {
+  font-size: 1.85rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.25rem;
+  margin-top: 1.5em;
+  margin-bottom: 0.6em;
+}
+
+.prose-custom h2 {
+  font-size: 1.45rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.2rem;
+  margin-top: 1.6em;
+  margin-bottom: 0.5em;
+}
+
+.prose-custom h3 {
+  font-size: 1.2rem;
+  margin-top: 1.4em;
+  margin-bottom: 0.4em;
+  font-weight: 600;
+}
+
+.prose-custom a {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.prose-custom a:hover {
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.prose-custom blockquote {
+  border-left: 3px solid var(--border-color);
+  background-color: var(--bg-surface);
+  padding: 0.65rem 1rem;
+  margin: 1.25em 0;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.prose-custom ul {
+  list-style-type: square;
+  padding-left: 1.5rem;
+  margin: 0.85em 0;
+}
+
+.prose-custom ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin: 0.85em 0;
+}
+
+.prose-custom li {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+.prose-custom code:not(pre code) {
+  padding: 0.15em 0.35em;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.85em;
+  color: var(--text-primary);
+}
+
+/* Wikipedia Table of Contents Box */
+.wiki-toc {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1rem;
+  margin: 1.5rem 0;
+  display: table;
+  font-size: 0.85rem;
+}
+
+/* Wikipedia Infobox */
+.wiki-infobox {
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 0.825rem;
+  line-height: 1.5;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .wiki-infobox {
+    width: 290px;
+    float: right;
+    margin: 0 0 1rem 1.5rem;
+  }
+}
+
+.wiki-infobox th {
+  background-color: var(--border-light);
+  padding: 0.35rem 0.6rem;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid var(--border-subtle);
+}
+
+.wiki-infobox td {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--border-subtle);
 }
 
 /* Shiki Dual-Theme handling & Code blocks */
@@ -60,123 +203,43 @@ html.dark .astro-code,
 html.dark .astro-code span {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
-  font-style: var(--shiki-dark-font-style) !important;
-  font-weight: var(--shiki-dark-font-weight) !important;
-  text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
 .astro-code {
-  padding: 1.25rem;
-  border-radius: 0.5rem;
+  padding: 1rem;
   border: 1px solid var(--border-color);
-  font-size: 0.875rem;
-  line-height: 1.6;
+  font-size: 0.8125rem;
+  line-height: 1.55;
   overflow-x: auto;
   position: relative;
+  background-color: var(--bg-surface) !important;
 }
 
-/* Copy button styling inside code containers */
 .code-block-wrapper {
   position: relative;
 }
 
 .copy-code-button {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  padding: 0.25rem 0.6rem;
-  font-size: 0.75rem;
-  font-family: ui-monospace, monospace;
-  border-radius: 0.25rem;
-  background: var(--bg-surface);
-  color: var(--text-secondary);
+  top: 0.4rem;
+  right: 0.4rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.7rem;
+  font-family: monospace;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   border: 1px solid var(--border-color);
-  opacity: 0.8;
   cursor: pointer;
-  transition: all 0.15s ease-in-out;
+  transition: all 0.1s ease-in-out;
   z-index: 10;
 }
 
 .copy-code-button:hover {
-  opacity: 1;
-  background: var(--border-color);
-  color: var(--text-primary);
+  background: var(--text-primary);
+  color: var(--bg-primary);
 }
 
 .copy-code-button.copied {
-  background: #10b981;
-  color: #ffffff;
-  border-color: #10b981;
-}
-
-/* Prose customizations */
-.prose-custom {
-  max-width: 68ch;
-  margin: 0 auto;
-  line-height: 1.75;
-}
-
-.prose-custom p {
-  margin-top: 1.25em;
-  margin-bottom: 1.25em;
-}
-
-.prose-custom h1, .prose-custom h2, .prose-custom h3, .prose-custom h4 {
-  color: var(--text-primary);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.prose-custom h2 {
-  font-size: 1.5rem;
-  margin-top: 2em;
-  margin-bottom: 0.75em;
-  padding-bottom: 0.35rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.prose-custom h3 {
-  font-size: 1.25rem;
-  margin-top: 1.6em;
-  margin-bottom: 0.6em;
-}
-
-.prose-custom a {
-  color: var(--accent-color);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.prose-custom blockquote {
-  border-left: 3px solid var(--border-color);
-  padding-left: 1rem;
-  font-style: italic;
-  color: var(--text-secondary);
-  margin: 1.5em 0;
-}
-
-.prose-custom ul {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin: 1.25em 0;
-}
-
-.prose-custom ol {
-  list-style-type: decimal;
-  padding-left: 1.5rem;
-  margin: 1.25em 0;
-}
-
-.prose-custom li {
-  margin-top: 0.35em;
-  margin-bottom: 0.35em;
-}
-
-.prose-custom code:not(pre code) {
-  padding: 0.2em 0.4em;
-  border-radius: 0.25rem;
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  font-size: 0.875em;
-  color: var(--text-primary);
+  background: var(--text-primary);
+  color: var(--bg-primary);
 }
