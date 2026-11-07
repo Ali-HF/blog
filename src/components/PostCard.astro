@@ -1,0 +1,87 @@
+---
+import Badge from './Badge.astro';
+import { url } from '../utils/paths';
+
+interface Props {
+  post: {
+    id: string;
+    data: {
+      title: string;
+      description: string;
+      pubDate: Date;
+      type: 'rant' | 'build';
+      tags: string[];
+      status?: 'shipped' | 'in-progress' | 'abandoned';
+      stack?: string[];
+      readingTime?: string;
+    };
+  };
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, type, tags, status, stack } = post.data;
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+}).format(pubDate);
+
+const postUrl = url(`/blog/${post.id}`);
+---
+
+<article
+  class="group relative flex flex-col p-5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all hover:shadow-sm"
+>
+  <!-- Top Meta Strip: Type Badge, Date, Reading time -->
+  <div class="flex items-center justify-between gap-2 mb-3">
+    <div class="flex items-center gap-2">
+      <Badge type={type} />
+      {status && <Badge type={status} />}
+    </div>
+    <div class="flex items-center gap-2 font-mono text-xs text-zinc-400 dark:text-zinc-500">
+      <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <h2 class="text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors leading-snug tracking-tight mb-2">
+    <a href={postUrl} class="focus:outline-none">
+      <span class="absolute inset-0 z-0"></span>
+      {title}
+    </a>
+  </h2>
+
+  <!-- Description -->
+  <p class="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-3 mb-4 leading-relaxed flex-1">
+    {description}
+  </p>
+
+  <!-- Stack Pills (for Builds) -->
+  {stack && stack.length > 0 && (
+    <div class="relative z-10 flex flex-wrap gap-1.5 mb-3 font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
+      {stack.slice(0, 4).map((tech) => (
+        <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/60">
+          {tech}
+        </span>
+      ))}
+      {stack.length > 4 && (
+        <span class="text-zinc-400 self-center">+{stack.length - 4}</span>
+      )}
+    </div>
+  )}
+
+  <!-- Tags -->
+  {tags && tags.length > 0 && (
+    <div class="relative z-10 flex flex-wrap items-center gap-1.5 pt-3 border-t border-zinc-100 dark:border-zinc-800/60">
+      {tags.map((tag) => (
+        <a
+          href={url(`/tags/${tag}`)}
+          class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+        >
+          #{tag}
+        </a>
+      ))}
+    </div>
+  )}
+</article>
