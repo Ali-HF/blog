@@ -7,30 +7,31 @@ interface Props {
 
 const { type = 'neutral', text, size = 'sm' } = Astro.props;
 
+// Pure black and white Wikipedia styling
 const styles: Record<string, string> = {
-  rant: 'border-rose-500/30 bg-rose-500/10 text-rose-600 dark:text-rose-400 dark:border-rose-500/30',
-  build: 'border-sky-500/30 bg-sky-500/10 text-sky-600 dark:text-sky-400 dark:border-sky-500/30',
-  shipped: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 dark:border-emerald-500/30',
-  'in-progress': 'border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 dark:border-amber-500/30',
-  abandoned: 'border-zinc-500/30 bg-zinc-500/10 text-zinc-500 dark:text-zinc-400 dark:border-zinc-500/30 line-through',
-  tag: 'border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-800/60 text-zinc-600 dark:text-zinc-300 hover:border-zinc-400 dark:hover:border-zinc-600',
-  neutral: 'border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-850 text-zinc-600 dark:text-zinc-400',
+  rant: 'border-black dark:border-white bg-black dark:bg-white text-white dark:text-black font-bold',
+  build: 'border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-primary)] font-semibold',
+  shipped: 'border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-primary)]',
+  'in-progress': 'border-[var(--border-color)] border-dashed bg-transparent text-[var(--text-secondary)]',
+  abandoned: 'border-[var(--border-subtle)] text-[var(--text-muted)] line-through',
+  tag: 'border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:border-[var(--text-primary)] hover:text-[var(--text-primary)]',
+  neutral: 'border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-secondary)]',
 };
 
 const sizeStyles = {
-  sm: 'text-[11px] px-2 py-0.5',
-  md: 'text-xs px-2.5 py-1',
+  sm: 'text-[10px] px-1.5 py-0.2',
+  md: 'text-xs px-2 py-0.5',
 };
 
 const label = text || type;
 ---
 
 <span
-  class={`inline-flex items-center gap-1 font-mono font-medium rounded border uppercase tracking-wider transition-colors ${styles[type] || styles.neutral} ${sizeStyles[size]}`}
+  class={`inline-flex items-center gap-1 font-mono uppercase tracking-wider border rounded-none transition-colors ${styles[type] || styles.neutral} ${sizeStyles[size]}`}
 >
-  {type === 'rant' && <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>}
-  {type === 'build' && <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>}
-  {type === 'shipped' && <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>}
-  {type === 'in-progress' && <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>}
+  {type === 'rant' && <span class="text-[9px]">■</span>}
+  {type === 'build' && <span class="text-[9px]">□</span>}
+  {type === 'shipped' && <span class="text-[9px]">✓</span>}
+  {type === 'in-progress' && <span class="text-[9px]">⧗</span>}
   <slot>{label}</slot>
 </span>
