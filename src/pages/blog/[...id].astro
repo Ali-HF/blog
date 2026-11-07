@@ -34,7 +34,7 @@ const formattedUpdate = updatedDate
   : null;
 
 const readingTime = getReadingTime(post.body || '');
-const showToc = headings.length >= 3;
+const showToc = headings.length >= 2;
 ---
 
 <BaseLayout
@@ -43,171 +43,155 @@ const showToc = headings.length >= 3;
   articleDate={pubDate}
   articleType={type}
 >
-  <div class="max-w-3xl mx-auto">
-    <!-- Back button -->
-    <a
-      href={url('/blog')}
-      class="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors mb-8 group"
-    >
-      <span class="group-hover:-translate-x-0.5 transition-transform">&larr;</span>
-      <span>Back to all posts</span>
-    </a>
-
-    <!-- Post Header -->
-    <header class="pb-8 border-b border-zinc-200 dark:border-zinc-800 space-y-4">
-      <div class="flex flex-wrap items-center gap-2">
-        <Badge type={type} size="md" />
-        {status && <Badge type={status} size="md" />}
-        <span class="font-mono text-xs text-zinc-400">•</span>
-        <span class="font-mono text-xs text-zinc-500 dark:text-zinc-400">{readingTime}</span>
+  <div class="max-w-4xl mx-auto">
+    <!-- Breadcrumb / Wiki navigation -->
+    <div class="flex items-center justify-between text-xs font-mono text-[var(--text-secondary)] pb-2 mb-4 border-b border-[var(--border-light)]">
+      <div class="flex items-center gap-2">
+        <a href={url('/blog')} class="hover:underline">&larr; Back to Archive</a>
+        <span>/</span>
+        <span class="capitalize">{type}s</span>
       </div>
+      <div>
+        <span>{readingTime}</span>
+      </div>
+    </div>
 
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight leading-tight">
+    <!-- Wikipedia Article Header -->
+    <header class="pb-3 mb-6 border-b border-[var(--border-color)]">
+      <h1 class="font-serif text-3xl sm:text-4xl text-[var(--text-primary)] font-normal tracking-tight">
         {title}
       </h1>
-
-      <p class="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
-        {description}
+      <p class="text-xs font-serif italic text-[var(--text-secondary)] mt-1">
+        From Ali's Wiki, the personal encyclopedia of engineering notes and software rants.
       </p>
-
-      <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-zinc-500 pt-2">
-        <div>
-          <span>Published on </span>
-          <time datetime={pubDate.toISOString()} class="text-zinc-700 dark:text-zinc-300 font-medium">
-            {formattedDate}
-          </time>
-        </div>
-        {formattedUpdate && (
-          <div>
-            <span>(Updated: </span>
-            <time datetime={updatedDate?.toISOString()}>{formattedUpdate}</time>
-            <span>)</span>
-          </div>
-        )}
+      <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-[var(--text-muted)] pt-2">
+        <span>Published: {formattedDate}</span>
+        {formattedUpdate && <span>(Last revision: {formattedUpdate})</span>}
       </div>
-
-      <!-- Tags -->
-      {tags && tags.length > 0 && (
-        <div class="flex flex-wrap gap-1.5 pt-2">
-          {tags.map((tag) => (
-            <a
-              href={url(`/tags/${tag}`)}
-              class="font-mono text-xs px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
-            >
-              #{tag}
-            </a>
-          ))}
-        </div>
-      )}
     </header>
 
-    <!-- Build Facts Box (For Builds only) -->
+    <!-- Wikipedia Classic Infobox for Builds -->
     {type === 'build' && (
-      <aside class="my-8 p-5 rounded-xl border border-sky-500/30 bg-sky-500/5 dark:bg-sky-950/20 space-y-3 font-mono text-xs">
-        <div class="flex items-center justify-between pb-2 border-b border-sky-500/20">
-          <span class="font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300 flex items-center gap-1.5">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>
-            Build Facts &amp; Specifications
-          </span>
-          {status && <Badge type={status} />}
+      <aside class="wiki-infobox float-none sm:float-right mb-6 sm:ml-6 sm:mb-4 border border-[var(--border-color)] bg-[var(--bg-surface)] text-xs">
+        <div class="bg-[var(--border-light)] p-2 text-center font-serif font-bold text-[var(--text-primary)] border-b border-[var(--border-color)]">
+          {title}
         </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-          {stack && stack.length > 0 && (
-            <div class="sm:col-span-2">
-              <span class="text-zinc-400 block mb-1">Architecture &amp; Tech Stack:</span>
-              <div class="flex flex-wrap gap-1.5">
-                {stack.map((t) => (
-                  <span class="px-2 py-0.5 rounded bg-white dark:bg-zinc-900 border border-sky-500/30 text-sky-900 dark:text-sky-200">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {repo && (
-            <div>
-              <span class="text-zinc-400 block mb-1">Repository:</span>
-              <a
-                href={repo}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-teal-600 dark:text-teal-400 hover:underline break-all inline-flex items-center gap-1"
-              >
-                {repo.replace('https://github.com/', '')} &nearr;
-              </a>
-            </div>
-          )}
-
-          {liveUrl && (
-            <div>
-              <span class="text-zinc-400 block mb-1">Live Deployment:</span>
-              <a
-                href={liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-teal-600 dark:text-teal-400 hover:underline break-all inline-flex items-center gap-1"
-              >
-                {liveUrl} &nearr;
-              </a>
-            </div>
-          )}
-        </div>
+        <table class="w-full border-collapse">
+          <tbody>
+            <tr>
+              <th class="w-1/3 text-[var(--text-secondary)] border-b border-[var(--border-subtle)] p-2 text-left font-semibold">Article Type</th>
+              <td class="border-b border-[var(--border-subtle)] p-2 font-mono uppercase">
+                <Badge type={type} />
+              </td>
+            </tr>
+            {status && (
+              <tr>
+                <th class="text-[var(--text-secondary)] border-b border-[var(--border-subtle)] p-2 text-left font-semibold">Project Status</th>
+                <td class="border-b border-[var(--border-subtle)] p-2 font-mono">
+                  <Badge type={status} />
+                </td>
+              </tr>
+            )}
+            {stack && stack.length > 0 && (
+              <tr>
+                <th class="text-[var(--text-secondary)] border-b border-[var(--border-subtle)] p-2 text-left font-semibold align-top">Technology Stack</th>
+                <td class="border-b border-[var(--border-subtle)] p-2 font-mono">
+                  <ul class="list-none space-y-0.5">
+                    {stack.map((t) => (
+                      <li>• {t}</li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            )}
+            {repo && (
+              <tr>
+                <th class="text-[var(--text-secondary)] border-b border-[var(--border-subtle)] p-2 text-left font-semibold">Source Code</th>
+                <td class="border-b border-[var(--border-subtle)] p-2 font-mono break-all">
+                  <a href={repo} target="_blank" rel="noopener noreferrer" class="underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black">
+                    GitHub &nearr;
+                  </a>
+                </td>
+              </tr>
+            )}
+            {liveUrl && (
+              <tr>
+                <th class="text-[var(--text-secondary)] border-b border-[var(--border-subtle)] p-2 text-left font-semibold">Deployment</th>
+                <td class="border-b border-[var(--border-subtle)] p-2 font-mono break-all">
+                  <a href={liveUrl} target="_blank" rel="noopener noreferrer" class="underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black">
+                    Live Site &nearr;
+                  </a>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </aside>
     )}
 
-    <!-- Table of Contents for Long Posts -->
+    <!-- Lead Paragraph / Description -->
+    <div class="font-serif text-base text-[var(--text-primary)] leading-relaxed mb-6 font-normal">
+      <p class="first-letter:text-3xl first-letter:font-bold first-letter:mr-0.5">
+        {description}
+      </p>
+    </div>
+
+    <!-- Wikipedia Table of Contents Box -->
     {showToc && (
-      <details class="my-8 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 text-xs font-mono">
-        <summary class="cursor-pointer font-semibold text-zinc-700 dark:text-zinc-300 select-none">
-          Table of Contents ({headings.length} sections)
-        </summary>
-        <nav class="mt-3 space-y-1.5 pl-2 border-l border-zinc-200 dark:border-zinc-700">
-          {headings.map((h) => (
-            <a
-              href={`#${h.slug}`}
-              class={`block text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors ${
-                h.depth === 3 ? 'pl-4' : ''
-              }`}
-            >
-              {h.text}
-            </a>
+      <nav class="wiki-toc mb-6" aria-label="Contents">
+        <div class="font-serif font-bold text-xs pb-1 mb-2 border-b border-[var(--border-subtle)] flex items-center justify-between gap-4">
+          <span>Contents</span>
+          <span class="font-mono text-[10px] text-[var(--text-muted)]">[numbered]</span>
+        </div>
+        <ol class="space-y-1 text-xs font-serif">
+          {headings.map((h, i) => (
+            <li class={`leading-tight ${h.depth === 3 ? 'pl-4 text-[11px]' : ''}`}>
+              <span class="font-mono text-[var(--text-muted)] mr-1">{i + 1}</span>
+              <a href={`#${h.slug}`} class="underline hover:text-black dark:hover:text-white">
+                {h.text}
+              </a>
+            </li>
           ))}
-        </nav>
-      </details>
+        </ol>
+      </nav>
     )}
 
-    <!-- Markdown Article Content (Indexed by Pagefind) -->
-    <article data-pagefind-body class="prose-custom py-6">
+    <!-- Article Content -->
+    <article data-pagefind-body class="prose-custom clear-left py-2">
       <Content />
     </article>
 
-    <!-- Post Navigation (Prev / Next) -->
-    <nav class="my-12 pt-6 border-t border-zinc-200 dark:border-zinc-800 grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
+    <!-- Wikipedia Categories Box -->
+    {tags && tags.length > 0 && (
+      <div class="mt-8 p-3 border border-[var(--border-color)] bg-[var(--bg-surface)] text-xs font-mono">
+        <span class="font-bold text-[var(--text-primary)] mr-2">Categories:</span>
+        {tags.map((tag, i) => (
+          <span>
+            <a href={url(`/tags/${tag}`)} class="underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black px-0.5">
+              {tag}
+            </a>
+            {i < tags.length - 1 ? ' | ' : ''}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <!-- See Also / Navigation -->
+    <div class="mt-8 pt-4 border-t border-[var(--border-color)] flex flex-col sm:flex-row justify-between gap-4 text-xs font-mono">
       {prevPost ? (
-        <a
-          href={url(`/blog/${prevPost.id}`)}
-          class="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors flex flex-col gap-1 group"
-        >
-          <span class="text-zinc-400 group-hover:text-teal-500 transition-colors">&larr; Older post</span>
-          <span class="font-bold text-zinc-900 dark:text-zinc-100 line-clamp-1">{prevPost.data.title}</span>
+        <a href={url(`/blog/${prevPost.id}`)} class="hover:underline flex items-center gap-1">
+          <span>&larr; Previous entry:</span>
+          <span class="font-bold font-serif">{prevPost.data.title}</span>
         </a>
-      ) : (
-        <div></div>
-      )}
+      ) : <div></div>}
 
       {nextPost && (
-        <a
-          href={url(`/blog/${nextPost.id}`)}
-          class="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors flex flex-col gap-1 text-right group sm:ml-auto w-full"
-        >
-          <span class="text-zinc-400 group-hover:text-teal-500 transition-colors">Newer post &rarr;</span>
-          <span class="font-bold text-zinc-900 dark:text-zinc-100 line-clamp-1">{nextPost.data.title}</span>
+        <a href={url(`/blog/${nextPost.id}`)} class="hover:underline flex items-center gap-1 text-right sm:ml-auto">
+          <span>Next entry:</span>
+          <span class="font-bold font-serif">{nextPost.data.title}</span>
+          <span>&rarr;</span>
         </a>
       )}
-    </nav>
+    </div>
   </div>
 </BaseLayout>
