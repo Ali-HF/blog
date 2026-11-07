@@ -31,21 +31,19 @@ const postUrl = url(`/blog/${post.id}`);
 ---
 
 <article
-  class="group relative flex flex-col p-5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all hover:shadow-sm"
+  class="group relative flex flex-col p-4 border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-[var(--text-primary)] transition-colors"
 >
-  <!-- Top Meta Strip: Type Badge, Date, Reading time -->
-  <div class="flex items-center justify-between gap-2 mb-3">
-    <div class="flex items-center gap-2">
+  <!-- Wiki Header: Type Badge, Date -->
+  <div class="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-[var(--border-light)] text-[11px] font-mono text-[var(--text-secondary)]">
+    <div class="flex items-center gap-1.5">
       <Badge type={type} />
       {status && <Badge type={status} />}
     </div>
-    <div class="flex items-center gap-2 font-mono text-xs text-zinc-400 dark:text-zinc-500">
-      <time datetime={pubDate.toISOString()}>{formattedDate}</time>
-    </div>
+    <time datetime={pubDate.toISOString()}>{formattedDate}</time>
   </div>
 
-  <!-- Title -->
-  <h2 class="text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors leading-snug tracking-tight mb-2">
+  <!-- Serif Title (Wikipedia style) -->
+  <h2 class="font-serif text-lg font-bold text-[var(--text-primary)] group-hover:underline leading-snug mb-2">
     <a href={postUrl} class="focus:outline-none">
       <span class="absolute inset-0 z-0"></span>
       {title}
@@ -53,33 +51,35 @@ const postUrl = url(`/blog/${post.id}`);
   </h2>
 
   <!-- Description -->
-  <p class="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-3 mb-4 leading-relaxed flex-1">
+  <p class="text-xs text-[var(--text-secondary)] leading-relaxed flex-1 mb-3">
     {description}
   </p>
 
-  <!-- Stack Pills (for Builds) -->
+  <!-- Stack items -->
   {stack && stack.length > 0 && (
-    <div class="relative z-10 flex flex-wrap gap-1.5 mb-3 font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
+    <div class="relative z-10 flex flex-wrap gap-1 mb-2 font-mono text-[10px] text-[var(--text-muted)]">
+      <span class="font-bold text-[var(--text-secondary)]">Stack:</span>
       {stack.slice(0, 4).map((tech) => (
-        <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/60">
+        <span class="border border-[var(--border-subtle)] px-1 bg-[var(--bg-surface)]">
           {tech}
         </span>
       ))}
       {stack.length > 4 && (
-        <span class="text-zinc-400 self-center">+{stack.length - 4}</span>
+        <span>+{stack.length - 4}</span>
       )}
     </div>
   )}
 
-  <!-- Tags -->
+  <!-- Wiki Categories (Tags) -->
   {tags && tags.length > 0 && (
-    <div class="relative z-10 flex flex-wrap items-center gap-1.5 pt-3 border-t border-zinc-100 dark:border-zinc-800/60">
+    <div class="relative z-10 flex flex-wrap items-center gap-1 pt-2 border-t border-[var(--border-subtle)] text-[11px] font-mono text-[var(--text-muted)]">
+      <span class="text-[var(--text-secondary)]">Categories:</span>
       {tags.map((tag) => (
         <a
           href={url(`/tags/${tag}`)}
-          class="font-mono text-[11px] text-zinc-500 dark:text-zinc-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+          class="hover:underline text-[var(--text-primary)]"
         >
-          #{tag}
+          [[{tag}]]
         </a>
       ))}
     </div>
