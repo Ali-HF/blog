@@ -1,0 +1,153 @@
+---
+import { url } from '../utils/paths';
+---
+
+<div
+  id="search-dialog-backdrop"
+  class="fixed inset-0 z-50 bg-zinc-950/60 backdrop-blur-xs hidden items-start justify-center pt-16 sm:pt-24 px-4 overflow-y-auto"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="search-input"
+>
+  <div class="relative w-full max-w-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+    <!-- Header with Input -->
+    <div class="flex items-center gap-3 px-4 py-3 border-b border-zinc-200 dark:border-zinc-800">
+      <svg class="w-5 h-5 text-zinc-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      <input
+        id="search-input"
+        type="search"
+        placeholder="Search rants, builds, projects, keywords..."
+        class="w-full bg-transparent text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none"
+        autocomplete="off"
+      />
+      <button
+        id="search-close-btn"
+        type="button"
+        class="p-1 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 rounded text-xs font-mono"
+        aria-label="Close search"
+      >
+        <kbd class="px-1.5 py-0.5 bg-zinc-100 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700">ESC</kbd>
+      </button>
+    </div>
+
+    <!-- Search Output / Pagefind results container -->
+    <div id="search-results" class="max-h-96 overflow-y-auto p-4 text-sm divide-y divide-zinc-100 dark:divide-zinc-800/60">
+      <p class="text-xs text-zinc-500 font-mono text-center py-6">
+        Type to start searching posts and projects...
+      </p>
+    </div>
+
+    <!-- Footer hint -->
+    <div class="px-4 py-2.5 bg-zinc-50 dark:bg-zinc-950/60 border-t border-zinc-200 dark:border-zinc-800/80 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+      <span>Search powered by Pagefind</span>
+      <span>Use <kbd class="px-1 py-0.5 bg-zinc-200 dark:bg-zinc-800 rounded">ESC</kbd> to exit</span>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ baseSearchUrl: url('/pagefind/pagefind.js') }}>
+  let pagefindInstance = null;
+  let isPagefindLoaded = false;
+
+  async function loadPagefind() {
+    if (isPagefindLoaded) return pagefindInstance;
+    try {
+      // Dynamic import respecting base path
+      const pagefind = await import(/* @vite-ignore */ baseSearchUrl);
+      await pagefind.init();
+      pagefindInstance = pagefind;
+      isPagefindLoaded = true;
+      return pagefindInstance;
+    } catch (e) {
+      // If pagefind is not yet built (e.g., local dev before first production build)
+      console.info('Pagefind index not found, falling back to page indexer.');
+      return null;
+    }
+  }
+
+  function setupSearch() {
+    const backdrop = document.getElementById('search-dialog-backdrop');
+    const openBtn = document.getElementById('search-open-btn');
+    const closeBtn = document.getElementById('search-close-btn');
+    const input = document.getElementById('search-input');
+    const resultsContainer = document.getElementById('search-results');
+
+    if (!backdrop || !input) return;
+
+    function openSearch() {
+      backdrop.classList.remove('hidden');
+      backdrop.classList.add('flex');
+      input.value = '';
+      input.focus();
+      loadPagefind();
+    }
+
+    function closeSearch() {
+      backdrop.classList.add('hidden');
+      backdrop.classList.remove('flex');
+    }
+
+    if (openBtn) openBtn.addEventListener('click', openSearch);
+    if (closeBtn) closeBtn.addEventListener('click', closeSearch);
+
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) closeSearch();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        openSearch();
+      }
+      if (e.key === 'Escape' && !backdrop.classList.contains('hidden')) {
+        closeSearch();
+      }
+    });
+
+    let debounceTimer;
+    input.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(async () => {
+        const query = input.value.trim();
+        if (!query) {
+          resultsContainer.innerHTML = '<p class="text-xs text-zinc-500 font-mono text-center py-6">Type to start searching...</p>';
+          return;
+        }
+
+        const pf = await loadPagefind();
+        if (pf) {
+          const search = await pf.search(query);
+          if (search.results.length === 0) {
+            resultsContainer.innerHTML = `<p class="text-xs text-zinc-500 font-mono text-center py-6">No results found for "${query}"</p>`;
+            return;
+          }
+
+          const loadedResults = await Promise.all(search.results.slice(0, 7).map(r => r.data()));
+          resultsContainer.innerHTML = loadedResults.map(res => `
+            <a href="${res.url}" class="block py-2.5 px-3 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors group">
+              <div class="font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-teal-600 dark:group-hover:text-teal-400">
+                ${res.meta.title || 'Untitled'}
+              </div>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2 mt-1">
+                ${res.excerpt || ''}
+              </p>
+            </a>
+          `).join('');
+        } else {
+          // Dev fallback
+          resultsContainer.innerHTML = `
+            <div class="text-center py-6 space-y-2">
+              <p class="text-xs text-zinc-500 font-mono">Pagefind index generates after building with: <code class="px-1 py-0.5 bg-zinc-100 dark:bg-zinc-800 rounded">npm run build</code></p>
+              <a href="/blog" class="text-xs text-teal-600 dark:text-teal-400 underline font-mono">Browse all posts in blog archive</a>
+            </div>
+          `;
+        }
+      }, 150);
+    });
+  }
+
+  setupSearch();
+  document.addEventListener('astro:after-swap', setupSearch);
+</script>
