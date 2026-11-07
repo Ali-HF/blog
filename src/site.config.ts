@@ -20,7 +20,7 @@ export const siteConfig: SiteConfig = {
   // Placeholder blog name & tagline as requested
   name: "BLOG_NAME",
   tagline: "TAGLINE",
-  description: "A personal tech blog by Ali Hasan (Ali-HF) — opinionated rants on dev life and write-ups on shipped projects.",
+  description: "A personal tech blog by Ali Hasan (Ali-HF) - opinionated rants on dev life and write-ups on shipped projects.",
   author: "Ali Hasan",
   githubUser: "Ali-HF",
   repoName: "blog", // Change to "Ali-HF.github.io" if using a user-site repository
