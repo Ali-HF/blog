@@ -6,126 +6,124 @@ const actionsUrl = `https://github.com/${siteConfig.githubUser}/${siteConfig.rep
 ---
 
 <BaseLayout
-  title="About Ali Hasan"
-  description="BCIT student at NED University, Karachi. Building software, exploring AI engineering, running Notebloom and hkh.agency."
+  title="Ali Hasan"
+  description="Biographical encyclopedia article for Ali Hasan (Ali-HF), BCIT student at NED University, Karachi."
 >
-  <div class="max-w-3xl mx-auto space-y-10">
-    <!-- Header -->
-    <div class="border-b border-zinc-200 dark:border-zinc-800 pb-6">
-      <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 font-mono text-xs text-zinc-600 dark:text-zinc-400 mb-4">
-        <span>📍 Karachi, Pakistan</span>
-      </div>
-      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 mb-3">
-        About Ali Hasan
+  <div class="max-w-4xl mx-auto">
+    <!-- Header with Wikipedia title -->
+    <header class="pb-2 mb-6 border-b border-[var(--border-color)]">
+      <h1 class="font-serif text-3xl sm:text-4xl text-[var(--text-primary)] font-normal">
+        Ali Hasan
       </h1>
-      <p class="text-lg text-zinc-600 dark:text-zinc-300 font-normal">
-        BCIT student at NED University, builder, and future AI engineer.
+      <p class="text-xs font-serif italic text-[var(--text-secondary)] mt-1">
+        From Ali's Wiki, the free encyclopedia of dev logs and engineering builds.
       </p>
-    </div>
+    </header>
 
-    <!-- Bio / Story -->
-    <div class="prose-custom space-y-6 text-zinc-700 dark:text-zinc-300 leading-relaxed">
+    <!-- Wikipedia Biography Infobox -->
+    <aside class="wiki-infobox float-none sm:float-right mb-6 sm:ml-6 sm:mb-4 border border-[var(--border-color)] bg-[var(--bg-surface)] text-xs">
+      <div class="bg-[var(--border-light)] p-2 text-center font-serif font-bold text-[var(--text-primary)] border-b border-[var(--border-color)]">
+        Ali Hasan
+      </div>
+
+      <!-- Monochrome Portrait Glyph Box -->
+      <div class="p-4 border-b border-[var(--border-subtle)] bg-[var(--bg-card)] flex flex-col items-center justify-center">
+        <div class="w-20 h-20 border border-[var(--border-color)] flex items-center justify-center font-serif font-black text-3xl select-none bg-[var(--bg-surface)]">
+          AH
+        </div>
+        <div class="text-[10px] font-mono text-[var(--text-muted)] mt-2">Ali-HF (GitHub)</div>
+      </div>
+
+      <table class="w-full border-collapse">
+        <tbody>
+          <tr>
+            <th class="w-1/3 text-[var(--text-secondary)] border-b border-[var(--border-subtle)] p-2 text-left font-semibold">Location</th>
+            <td class="border-b border-[var(--border-subtle)] p-2">Karachi, Pakistan</td>
+          </tr>
+          <tr>
+            <th class="text-[var(--text-secondary)] border-b border-[var(--border-subtle)] p-2 text-left font-semibold">Alma mater</th>
+            <td class="border-b border-[var(--border-subtle)] p-2">
+              <a href="https://www.neduet.edu.pk" target="_blank" rel="noopener noreferrer" class="underline">
+                NED University
+              </a> (BCIT)
+            </td>
+          </tr>
+          <tr>
+            <th class="text-[var(--text-secondary)] border-b border-[var(--border-subtle)] p-2 text-left font-semibold">Occupation</th>
+            <td class="border-b border-[var(--border-subtle)] p-2">Student, AI Engineer in training</td>
+          </tr>
+          <tr>
+            <th class="text-[var(--text-secondary)] border-b border-[var(--border-subtle)] p-2 text-left font-semibold">Ventures</th>
+            <td class="border-b border-[var(--border-subtle)] p-2">
+              <a href={siteConfig.notebloomUrl} target="_blank" rel="noopener noreferrer" class="underline">Notebloom</a>,{' '}
+              <a href={siteConfig.hkhAgencyUrl} target="_blank" rel="noopener noreferrer" class="underline">hkh.agency</a>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-[var(--text-secondary)] border-b border-[var(--border-subtle)] p-2 text-left font-semibold">Core Focus</th>
+            <td class="border-b border-[var(--border-subtle)] p-2 font-mono text-[11px]">C++, DSA, MERN, AI</td>
+          </tr>
+          <tr>
+            <th class="text-[var(--text-secondary)] border-b border-[var(--border-subtle)] p-2 text-left font-semibold">Website</th>
+            <td class="border-b border-[var(--border-subtle)] p-2 font-mono text-[11px]">
+              <a href={siteConfig.githubUrl} target="_blank" rel="noopener noreferrer" class="underline">
+                github.com/{siteConfig.githubUser}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </aside>
+
+    <!-- Article Lead -->
+    <div class="prose-custom font-serif text-[15px] leading-relaxed text-[var(--text-primary)]">
+      <p class="first-letter:text-2xl first-letter:font-bold">
+        <strong>Ali Hasan</strong> (known online as <strong>Ali-HF</strong>) is a Pakistani computer science student and software builder currently pursuing a Bachelor of Science in Computer Science and Information Technology (BCIT) at NED University of Engineering and Technology in Karachi.
+      </p>
+
+      <h2>1. Academic Background and Interests</h2>
       <p>
-        I'm Ali Hasan (<strong>Ali-HF</strong> online). I study Computer Science &amp; Information Technology (BCIT) at NED University of Engineering and Technology in Karachi.
+        Hasan's technical coursework centers on computer science fundamentals, including Object-Oriented Programming (CT-260) in C++, Data Structures and Algorithms (CS-214), and Professional Ethics (CT-268). His academic projects prioritize spatial 3D algorithms visualizers, local RAG retrieval assistants, and systems-level compiler linking on Windows.
       </p>
 
+      <h2>2. Ventures and Industry Work</h2>
       <p>
-        My goal is to become an <strong>AI engineer</strong>. Right now, I split my time between core CS fundamentals—I genuinely enjoy C++, Object-Oriented Programming (OOP), and Data Structures &amp; Algorithms (DSA)—and shipping full-stack products with modern web tech. I'm actively expanding my web skills with the MERN stack while building production apps with Next.js and Supabase.
+        In parallel with his undergraduate studies, Hasan established two commercial and digital ventures:
       </p>
-
-      <p>
-        I build fast with AI tooling (Antigravity, Claude, Groq, FastEmbed) and I believe in being completely transparent about it. AI is an accelerator for scaffolding, boilerplate, and fast iteration—not an excuse to ignore how memory, race conditions, or cryptographic handshakes work under the hood.
-      </p>
-
-      <h2 class="text-xl font-bold text-zinc-900 dark:text-zinc-100 pt-4 border-b border-zinc-200 dark:border-zinc-800 pb-2">
-        Ventures &amp; Work
-      </h2>
-
-      <p>
-        Beyond university coursework, I run two independent ventures:
-      </p>
-
-      <ul class="list-disc pl-5 space-y-2">
+      <ul>
         <li>
-          <a
-            href={siteConfig.notebloomUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-teal-600 dark:text-teal-400 font-semibold underline underline-offset-2"
-          >
-            Notebloom
-          </a>: A bespoke stationery brand and online store I founded, engineered, and managed end-to-end, selling both through our web platform and at physical retail stalls like Habitt.
+          <strong>Notebloom</strong>: An e-commerce stationery brand and custom software platform engineered using Next.js 16, Supabase, and Tailwind CSS v4, combining digital web store operations with retail stall presence at Habitt.
         </li>
         <li>
-          <a
-            href={siteConfig.hkhAgencyUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-teal-600 dark:text-teal-400 font-semibold underline underline-offset-2"
-          >
-            hkh.agency
-          </a>: A marketing and digital growth agency working with businesses to establish high-converting online presence.
+          <strong>hkh.agency</strong>: A digital marketing agency providing development and growth infrastructure for businesses.
         </li>
       </ul>
 
-      <!-- Opinions / Takes Hook -->
-      <!-- ALI: add your personal philosophy on balancing university life, coding projects, and running businesses -->
-    </div>
-
-    <!-- GitHub Activity & Deployment Status Section -->
-    <section class="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="text-lg font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-          </svg>
-          GitHub Activity
-        </h2>
-        <span class="font-mono text-xs text-zinc-500">Live CI/CD</span>
-      </div>
-
-      <p class="text-xs text-zinc-600 dark:text-zinc-400">
-        Every commit to this blog triggers an automated GitHub Actions workflow deploying statically to GitHub Pages.
+      <h2>3. Philosophy on AI Tooling</h2>
+      <p>
+        Hasan advocates for high-speed software development leveraging modern AI engineering assistants—such as Antigravity, Groq, FastEmbed, and Claude—paired with candid transparency regarding their usage. He emphasizes that rapid generative scaffolding must be grounded in an understanding of memory allocation, SQL transaction locks, and cryptographic handshakes.
       </p>
 
-      <div class="flex flex-wrap gap-3 font-mono text-xs pt-1">
-        <a
-          href={siteConfig.githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="px-3 py-1.5 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium hover:bg-zinc-800 transition-colors inline-flex items-center gap-1.5"
-        >
-          <span>github.com/{siteConfig.githubUser}</span>
-          <span>&nearr;</span>
-        </a>
+      <!-- ALI opinion comment hook -->
+      <!-- ALI: add your personal philosophy on balancing university life, coding projects, and running businesses -->
 
-        <a
-          href={actionsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="px-3 py-1.5 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-zinc-400 transition-colors inline-flex items-center gap-1.5"
-        >
-          <span>Actions Runs ({siteConfig.repoName})</span>
-          <span>&nearr;</span>
-        </a>
+      <h2>4. Version Control and Continuous Deployment</h2>
+      <p>
+        This encyclopedia is compiled statically with Astro and deployed continuously to GitHub Pages using GitHub Actions upon every verified push to the repository trunk.
+      </p>
+
+      <div class="p-3 my-4 border border-[var(--border-color)] bg-[var(--bg-surface)] font-mono text-xs space-y-1">
+        <div><strong>Repository:</strong> <a href={`https://github.com/${siteConfig.githubUser}/${siteConfig.repoName}`} class="underline" target="_blank" rel="noopener noreferrer">{siteConfig.githubUser}/{siteConfig.repoName}</a></div>
+        <div><strong>Deployment Pipeline:</strong> <a href={actionsUrl} class="underline" target="_blank" rel="noopener noreferrer">{actionsUrl} &nearr;</a></div>
       </div>
-    </section>
 
-    <!-- Social Links Strip -->
-    <div class="pt-6 border-t border-zinc-200 dark:border-zinc-800 flex flex-wrap items-center gap-6 font-mono text-xs text-zinc-500">
-      <span class="text-zinc-400">Connect:</span>
-      <a href={siteConfig.githubUrl} target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 dark:hover:text-teal-400">
-        GitHub
-      </a>
-      <a href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 dark:hover:text-teal-400">
-        LinkedIn
-      </a>
-      <a href={siteConfig.notebloomUrl} target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 dark:hover:text-teal-400">
-        Notebloom
-      </a>
-      <a href={siteConfig.hkhAgencyUrl} target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 dark:hover:text-teal-400">
-        hkh.agency
-      </a>
+      <h2>5. External Links</h2>
+      <ul class="font-mono text-xs space-y-1">
+        <li>• <a href={siteConfig.githubUrl} target="_blank" rel="noopener noreferrer" class="underline">Official GitHub Profile (Ali-HF)</a></li>
+        <li>• <a href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer" class="underline">LinkedIn Profile Placeholder</a></li>
+        <li>• <a href={siteConfig.notebloomUrl} target="_blank" rel="noopener noreferrer" class="underline">Notebloom Official Website</a></li>
+        <li>• <a href={siteConfig.hkhAgencyUrl} target="_blank" rel="noopener noreferrer" class="underline">hkh.agency Official Website</a></li>
+      </ul>
     </div>
   </div>
 </BaseLayout>
