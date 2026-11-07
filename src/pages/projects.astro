@@ -18,95 +18,104 @@ const inProgressCount = sortedProjects.filter((p) => p.data.status === 'in-progr
 ---
 
 <BaseLayout
-  title="Projects & Builds"
-  description="Full portfolio of web applications, systems, academic course projects, and hackathon entries built by Ali Hasan."
+  title="Projects Directory"
+  description="Full Wikipedia-style catalog of web applications, systems, academic course projects, and hackathon prototypes."
 >
-  <div class="space-y-8">
+  <div class="space-y-6">
     <!-- Header -->
-    <div class="border-b border-zinc-200 dark:border-zinc-800 pb-6">
-      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 mb-2">
-        Projects &amp; Builds
+    <header class="pb-2 border-b border-[var(--border-color)]">
+      <h1 class="font-serif text-3xl sm:text-4xl text-[var(--text-primary)] font-normal">
+        List of Software Projects
       </h1>
-      <p class="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base max-w-2xl">
-        A catalog of what I've engineered, shipped, or am currently hacking on. No hypothetical roadmaps—just actual working software and active builds.
+      <p class="text-xs font-serif italic text-[var(--text-secondary)] mt-1">
+        Catalog of software systems, course projects, and prototypes developed by Ali Hasan.
       </p>
+    </header>
+
+    <!-- Wikipedia Filter Bar -->
+    <div class="border border-[var(--border-color)] bg-[var(--bg-surface)] p-2.5 flex items-center justify-between text-xs font-mono">
+      <div class="flex items-center gap-1">
+        <span class="text-[var(--text-muted)] mr-2">Filter status:</span>
+        <button
+          type="button"
+          data-filter="all"
+          class="proj-filter px-2.5 py-1 border border-[var(--border-color)] bg-[var(--bg-primary)] font-bold text-[var(--text-primary)]"
+        >
+          All ({totalCount})
+        </button>
+        <button
+          type="button"
+          data-filter="shipped"
+          class="proj-filter px-2.5 py-1 border border-transparent text-[var(--text-secondary)] hover:border-[var(--border-subtle)]"
+        >
+          Shipped ({shippedCount})
+        </button>
+        <button
+          type="button"
+          data-filter="in-progress"
+          class="proj-filter px-2.5 py-1 border border-transparent text-[var(--text-secondary)] hover:border-[var(--border-subtle)]"
+        >
+          In Progress ({inProgressCount})
+        </button>
+      </div>
+
+      <div class="text-[11px] text-[var(--text-muted)] hidden sm:block">
+        Format: Encyclopedia List
+      </div>
     </div>
 
-    <!-- Filter Buttons (instant client filter) -->
-    <div class="flex items-center gap-2 font-mono text-xs p-1 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 w-fit">
-      <button
-        type="button"
-        data-filter="all"
-        class="proj-filter px-3 py-1.5 rounded-lg font-medium transition-colors bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs"
-      >
-        All ({totalCount})
-      </button>
-      <button
-        type="button"
-        data-filter="shipped"
-        class="proj-filter px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-      >
-        Shipped ({shippedCount})
-      </button>
-      <button
-        type="button"
-        data-filter="in-progress"
-        class="proj-filter px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-      >
-        In Progress ({inProgressCount})
-      </button>
-    </div>
-
-    <!-- Projects Grid -->
-    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <!-- Projects Grid / Cards -->
+    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {sortedProjects.map((project) => {
         const { title, summary, stack, status, repo, liveUrl, year, featured } = project.data;
         return (
           <div
-            class="project-card flex flex-col p-5 rounded-xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 transition-all hover:border-zinc-400 dark:hover:border-zinc-700"
+            class="project-card border border-[var(--border-color)] bg-[var(--bg-card)] p-4 flex flex-col justify-between"
             data-status={status}
           >
-            <!-- Card Header -->
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <div class="flex items-center gap-1.5">
-                <Badge type={status} />
-                {featured && (
-                  <span class="font-mono text-[10px] uppercase font-bold text-teal-600 dark:text-teal-400 px-1.5 py-0.5 rounded bg-teal-50 dark:bg-teal-950/40 border border-teal-500/20">
-                    Featured
-                  </span>
-                )}
+            <div>
+              <!-- Meta Header -->
+              <div class="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-[var(--border-light)] text-[11px] font-mono">
+                <div class="flex items-center gap-1.5">
+                  <Badge type={status} />
+                  {featured && (
+                    <span class="border border-[var(--border-color)] px-1 font-bold text-[9px] uppercase">
+                      ★ Featured
+                    </span>
+                  )}
+                </div>
+                <span class="text-[var(--text-muted)]">{year}</span>
               </div>
-              <span class="font-mono text-xs text-zinc-400">{year}</span>
+
+              <!-- Title -->
+              <h2 class="font-serif text-base font-bold text-[var(--text-primary)] mb-2 leading-snug">
+                {title}
+              </h2>
+
+              <!-- Summary -->
+              <p class="text-xs text-[var(--text-secondary)] leading-relaxed mb-3">
+                {summary}
+              </p>
             </div>
 
-            <!-- Title -->
-            <h2 class="text-base font-bold text-zinc-900 dark:text-zinc-100 mb-2 leading-snug">
-              {title}
-            </h2>
+            <div>
+              <!-- Tech stack list -->
+              <div class="flex flex-wrap gap-1 mb-3 font-mono text-[10px] text-[var(--text-muted)]">
+                {stack.map((t) => (
+                  <span class="border border-[var(--border-subtle)] px-1 bg-[var(--bg-surface)]">
+                    {t}
+                  </span>
+                ))}
+              </div>
 
-            <!-- Summary -->
-            <p class="text-xs text-zinc-600 dark:text-zinc-400 line-clamp-3 mb-4 leading-relaxed flex-1">
-              {summary}
-            </p>
-
-            <!-- Stack Pills -->
-            <div class="flex flex-wrap gap-1 mb-4 font-mono text-[10px] text-zinc-500">
-              {stack.map((t) => (
-                <span class="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/60">
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            <!-- Links (Repo / Live) -->
-            <div class="pt-3 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between font-mono text-xs">
-              <div class="flex items-center gap-3">
+              <!-- Links -->
+              <div class="pt-2 border-t border-[var(--border-subtle)] flex items-center gap-3 text-xs font-mono">
                 {repo && (
                   <a
                     href={repo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="text-zinc-600 dark:text-zinc-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors inline-flex items-center gap-1"
+                    class="underline hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
                   >
                     Source &nearr;
                   </a>
@@ -116,7 +125,7 @@ const inProgressCount = sortedProjects.filter((p) => p.data.status === 'in-progr
                     href={liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="text-teal-600 dark:text-teal-400 hover:underline inline-flex items-center gap-1 font-semibold"
+                    class="underline font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
                   >
                     Live Demo &nearr;
                   </a>
@@ -139,18 +148,16 @@ const inProgressCount = sortedProjects.filter((p) => p.data.status === 'in-progr
       btn.addEventListener('click', () => {
         const filter = btn.getAttribute('data-filter');
 
-        // Toggle active button style
         filterButtons.forEach((b) => {
           if (b === btn) {
-            b.classList.add('bg-white', 'dark:bg-zinc-800', 'text-zinc-900', 'dark:text-zinc-100', 'shadow-xs', 'font-medium');
-            b.classList.remove('text-zinc-600', 'dark:text-zinc-400');
+            b.classList.add('bg-[var(--bg-primary)]', 'font-bold', 'text-[var(--text-primary)]', 'border-[var(--border-color)]');
+            b.classList.remove('border-transparent', 'text-[var(--text-secondary)]');
           } else {
-            b.classList.remove('bg-white', 'dark:bg-zinc-800', 'text-zinc-900', 'dark:text-zinc-100', 'shadow-xs', 'font-medium');
-            b.classList.add('text-zinc-600', 'dark:text-zinc-400');
+            b.classList.remove('bg-[var(--bg-primary)]', 'font-bold', 'text-[var(--text-primary)]', 'border-[var(--border-color)]');
+            b.classList.add('border-transparent', 'text-[var(--text-secondary)]');
           }
         });
 
-        // Filter cards
         cards.forEach((card) => {
           const status = card.getAttribute('data-status');
           if (filter === 'all' || status === filter) {
